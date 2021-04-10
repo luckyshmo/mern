@@ -8,12 +8,6 @@ stop:
 	docker-compose stop
 
 test:
-	go test -v  ./... -coverprofile=coverage.out
-	go tool cover -html=coverage.out
-
-# migrate: #alternative way to migrate DB
-# 	migrate -path ./schema -database 'postgres://postgres:example@localhost/postgres?sslmode=disable' up #!wrong!!
-
-# swag:
-# 	swag init -g cmd/main.go
+	go test -v  ./server/... -coverprofile=coverage.out
+	go tool cover -html=server/coverage.out
 
