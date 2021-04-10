@@ -4,11 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/luckyshmo/api-example/pkg/service"
 
-	ginSwagger "github.com/swaggo/gin-swagger" // gin-swagger middleware
-	"github.com/swaggo/gin-swagger/swaggerFiles"
 	ginprometheus "github.com/zsais/go-gin-prometheus"
-
-	_ "github.com/luckyshmo/api-example/docs"
 )
 
 type Handler struct {
@@ -21,9 +17,6 @@ func NewHandler(services *service.Service) *Handler {
 
 func (h *Handler) InitRoutes() *gin.Engine {
 	router := gin.New()
-
-	//Open-Api endpoints documentation using GIN swagger
-	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	p := ginprometheus.NewPrometheus("gin")
 	p.Use(router)

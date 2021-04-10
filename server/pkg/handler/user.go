@@ -7,18 +7,6 @@ import (
 	"github.com/google/uuid"
 )
 
-// @Summary Get User By Id
-// @Security ApiKeyAuth
-// @Tags user
-// @Description get user by id
-// @ID get-user-by-id
-// @Accept  json
-// @Produce  json
-// @Success 200 {object} models.User
-// @Failure 400,404 {object} errorResponse
-// @Failure 500 {object} errorResponse
-// @Failure default {object} errorResponse
-// @Router /api/user/:id [get]
 func (h *Handler) getUser(c *gin.Context) {
 
 	id := c.Param("id") //id in request
