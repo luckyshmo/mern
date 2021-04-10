@@ -2,7 +2,28 @@
 version: '3.1'
 
 services:
-
+  api:
+    build: ./
+    command: ./wait-for-postgres.sh db ./api-example
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+    environment:
+      - DB_PASSWORD=example
+      - APP_PORT=8080
+      - PG_HOST=db
+      - PG_PORT=5432
+      - LOG_LEVEL=debug
+      - PG_MIGRATIONS_PATH=file://./migrations
+      - PG_PAS=example
+      - PG_SSLMODE=disable
+      - PG_USERNAME=postgres
+      - PG_DBNAME=postgres
+      - ENV=production
+    #   "port": 5000,
+    # "jwtSecret": "some secret string",
+    # "mongoUri": "mongodb://root:example@localhost:8092/?authSource=admin"
   mongo:
     image: mongo
     restart: always

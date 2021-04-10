@@ -1,0 +1,32 @@
+# Use postgres/example user/password credentials
+version: '3.1'
+
+services:
+  api-example:
+    build: ./
+    command: ./wait-for-postgres.sh db ./api-example
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+    environment:
+      - DB_PASSWORD=example
+      - APP_PORT=8080
+      - PG_HOST=db
+      - PG_PORT=5432
+      - LOG_LEVEL=debug
+      - PG_MIGRATIONS_PATH=file://./migrations
+      - PG_PAS=example
+      - PG_SSLMODE=disable
+      - PG_USERNAME=postgres
+      - PG_DBNAME=postgres
+      - ENV=production
+  db:
+    image: postgres:latest
+    restart: always
+    # volumes:
+    # - ./.database/postgres/data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: example
+    ports:
+      - 5432:5432
