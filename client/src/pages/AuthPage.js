@@ -19,24 +19,20 @@ export const AuthPage = () => {
       [error, message, clearError]
     )
 
-    // useEffect( () => {
-    //   window.M.updateTextFields() //material activate inputs (no need??)
-    // }, [])
-
     const changeHandler = event => {
         setForm({ ...form, [event.target.name]: event.target.value })
     }
 
     const registerHandler = async () => {
         try {
-            const data = await request('api/auth/register', 'POST', {...form})
+            const data = await request('api/auth/sign-up', 'POST', {...form})
             message(data.message)
         } catch (e) { }
     }
 
     const loginHandler = async () => {
       try {
-          const data = await request('api/auth/login', 'POST', {...form})
+          const data = await request('api/auth/sign-in', 'POST', {...form})
           auth.login(data.token, data.userID)
       } catch (e) { }
     }
