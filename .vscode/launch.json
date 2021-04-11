@@ -5,23 +5,41 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "env":{
-                "PG_HOST" : "localhost",
-                "PG_PORT" : "5432",
-                "PG_PAS" : "example",
-                "PG_SSLMODE" : "disable",
-                "PG_MIGRATIONS_PATH" : "file://../pkg/repository/pg/migrations",
-                "PG_USERNAME" : "postgres",
-                "PG_DBNAME" : "postgres",
-                "LOG_LEVEL" : "debug",
-                "ENV" : "debug",
-                "APP_PORT" : "5000",
+            "command": "npm run start --prefix client/",
+            "name": "client",
+            "request": "launch",
+            "type": "node-terminal"
+        },
+        {
+            "name": "py",
+            "type": "python",
+            "request": "launch",
+            "program": "./googlekeep/keep_endpoint.py",
+        },
+        {
+            "env": {
+                "PG_HOST": "localhost",
+                "PG_PORT": "5432",
+                "PG_PAS": "example",
+                "PG_SSLMODE": "disable",
+                "PG_MIGRATIONS_PATH": "file://../pkg/repository/pg/migrations",
+                "PG_USERNAME": "postgres",
+                "PG_DBNAME": "postgres",
+                "LOG_LEVEL": "debug",
+                "ENV": "debug",
+                "APP_PORT": "5000",
             },
-            "name": "Launch Package",
+            "name": "server",
             "type": "go",
             "request": "launch",
             "mode": "debug",
             "program": "${workspaceFolder}/server/cmd"
         }
-    ]
+    ],
+    "compounds": [
+        {
+          "name": "Server/Client/Py",
+          "configurations": ["server", "client", "py"],
+        }
+      ]
 }
