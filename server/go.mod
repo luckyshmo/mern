@@ -12,7 +12,7 @@ require (
 	github.com/jmoiron/sqlx v1.3.1
 	github.com/kelseyhightower/envconfig v1.4.0
 	github.com/kr/text v0.2.0 // indirect
-	github.com/lib/pq v1.10.0
+	github.com/lib/pq v1.10.0 // indirect
 	github.com/magiconair/properties v1.8.5
 	github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e // indirect
 	github.com/pkg/errors v0.9.1
@@ -22,6 +22,7 @@ require (
 	github.com/ugorji/go v1.1.13 // indirect
 	github.com/zhashkevych/go-sqlxmock v1.5.1
 	github.com/zsais/go-gin-prometheus v0.1.0
+	go.mongodb.org/mongo-driver v1.1.0
 	golang.org/x/net v0.0.0-20210331212208-0fccb6fa2b5c // indirect
 	golang.org/x/sys v0.0.0-20210331175145-43e1dd70ce54 // indirect
 	golang.org/x/text v0.3.6 // indirect

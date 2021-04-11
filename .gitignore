@@ -1,2 +1,3 @@
 node_modules
 server/*.out
+server/cmd/__debug_bin

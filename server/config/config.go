@@ -20,6 +20,8 @@ type Config struct {
 	PgUserName       string `envconfig:"PG_USERNAME"`
 	PgDBName         string `envconfig:"PG_DBNAME"`
 
+	MongoURI string `envconfig:"MONGO_URI"`
+
 	Environment string `envconfig:"ENV"`
 
 	AppPort  string `envconfig:"APP_PORT"`

@@ -2,9 +2,8 @@ package repository
 
 import (
 	"github.com/google/uuid"
-	"github.com/jmoiron/sqlx"
 	"github.com/luckyshmo/api-example/models"
-	"github.com/luckyshmo/api-example/pkg/repository/pg"
+	"github.com/luckyshmo/api-example/pkg/repository/mongo"
 )
 
 type Authorization interface {
@@ -22,9 +21,9 @@ type Repository struct {
 	User
 }
 
-func NewRepository(db *sqlx.DB) *Repository {
+func NewRepository(mg *mongo.MongoClient) *Repository {
 	return &Repository{
-		Authorization: pg.NewAuthPostgres(db),
-		User:          pg.NewUserPG(db),
+		Authorization: mongo.NewAuthMongo(mg),
+		User:          mongo.NewUserMongo(mg),
 	}
 }

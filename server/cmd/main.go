@@ -7,11 +7,10 @@ import (
 	"syscall"
 	"time"
 
-	_ "github.com/lib/pq"
-
 	"github.com/luckyshmo/api-example/config"
 	"github.com/luckyshmo/api-example/pkg/handler"
 	"github.com/luckyshmo/api-example/pkg/repository"
+	"github.com/luckyshmo/api-example/pkg/repository/mongo"
 	"github.com/luckyshmo/api-example/pkg/repository/pg"
 	"github.com/luckyshmo/api-example/pkg/service"
 	"github.com/luckyshmo/api-example/server"
@@ -19,17 +18,6 @@ import (
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 )
-
-// @title Example API
-// @version 1.0
-// @description API Server Example for building go microservices
-
-// @host localhost:8080
-// @BasePath /
-
-// @securityDefinitions.apikey ApiKeyAuth
-// @in header
-// @name Authorization
 
 func main() {
 	//Mat Ryer advice to handle all app errors
@@ -57,22 +45,30 @@ func run() error {
 		logrus.SetFormatter(JSONF)
 	}
 
-	//Init DB
-	db, err := pg.NewPostgresDB(pg.Config{ //? you can get db by config
-		Host:     cfg.PgHOST,
-		Port:     cfg.PgPORT,
-		Username: cfg.PgUserName,
-		DBName:   cfg.PgDBName,
-		SSLMode:  cfg.PgSSLMode,
-		Password: cfg.PgPAS,
-	})
+	//Init PG
+	if false {
+		// _ "github.com/lib/pq"
+		_, err := pg.NewPostgresDB(pg.Config{ //? you can get db by config
+			Host:     cfg.PgHOST,
+			Port:     cfg.PgPORT,
+			Username: cfg.PgUserName,
+			DBName:   cfg.PgDBName,
+			SSLMode:  cfg.PgSSLMode,
+			Password: cfg.PgPAS,
+		})
+		if err != nil {
+			return errors.Wrap(err, "failed to initialize db")
+		}
+	}
+	//Init MONGO
+	mc, err := mongo.NewMongoClient(*cfg) //TODO disconnect
 	if err != nil {
 		return errors.Wrap(err, "failed to initialize db")
 	}
 
 	//Init main components
 	//Good Clean arch and dependency injection example
-	repos := repository.NewRepository(db)
+	repos := repository.NewRepository(mc)
 	services := service.NewService(repos)
 	handlers := handler.NewHandler(services)
 
@@ -92,9 +88,10 @@ func run() error {
 	<-quit
 
 	logrus.Print("App Shutting Down")
-	if err := db.Close(); err != nil {
-		return err
-	}
+
+	// if err := db.Close(); err != nil {
+	// 	return err
+	// }
 
 	return nil
 }
