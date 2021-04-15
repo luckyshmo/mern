@@ -17,6 +17,12 @@
             "program": "./googlekeep/keep_endpoint.py",
         },
         {
+            "name": "py_grpc",
+            "type": "python",
+            "request": "launch",
+            "program": "./googlekeep/grpc_endpoint.py",
+        },
+        {
             "env": {
                 "PG_HOST": "localhost",
                 "PG_PORT": "5432",
@@ -45,6 +51,10 @@
         {
             "name": "Server/Py",
             "configurations": ["server", "py"],
-          }
+        },
+        {
+            "name": "Server/Py_grpc",
+            "configurations": ["server", "py_grpc"],
+        },
       ]
 }
