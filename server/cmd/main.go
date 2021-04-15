@@ -70,6 +70,12 @@ func run() error {
 	//Good Clean arch and dependency injection example
 	repos := repository.NewRepository(mc)
 	services := service.NewService(repos)
+	note, err := services.GoogleKeep.GetAll()
+	if err != nil {
+		return err
+	}
+	fmt.Print(note)
+	return nil
 	handlers := handler.NewHandler(services)
 
 	//starting server

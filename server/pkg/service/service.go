@@ -3,6 +3,7 @@ package service
 import (
 	"github.com/google/uuid"
 	"github.com/luckyshmo/api-example/models"
+	"github.com/luckyshmo/api-example/models/keep"
 	"github.com/luckyshmo/api-example/pkg/repository"
 )
 
@@ -17,14 +18,20 @@ type User interface {
 	GetAll() ([]models.User, error)
 }
 
+type GoogleKeep interface {
+	GetAll() (keep.Note, error)
+}
+
 type Service struct {
 	Authorization
 	User
+	GoogleKeep
 }
 
 func NewService(repos *repository.Repository) *Service {
 	return &Service{
 		Authorization: NewAuthService(repos.Authorization),
 		User:          NewUserService(repos.User),
+		GoogleKeep:    NewKeepService(),
 	}
 }

@@ -34,6 +34,11 @@ func (h *Handler) InitRoutes() *gin.Engine {
 			users.GET("/", h.getUserList)
 			users.GET("/:id", h.getUser)
 		}
+
+		keep := api.Group("/keep")
+		{
+			keep.GET("/", h.keep)
+		}
 	}
 
 	return router

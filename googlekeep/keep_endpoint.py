@@ -36,14 +36,13 @@ FlaskJSON(app)
 # curl -X GET --data '{"email":"mishka2017@gmail.com","token":"iopnilguhgigbbht","name":"English words"}' http://localhost:5001/get_words
 # curl -X GET --data '{"email":"mishka2017@gmail.com","token":"iopnilguhgigbbht","name":"English words"}' http://localhost:3000/api/keep
 
-@app.route('/get_words', methods=['GET'])
+@app.route('/get_words', methods=['POST'])
 @as_json
 def get_value():
-    data = request.get_json(force=True)
-
-    email = (data['email'])     #mishka2017@gmail.com
-    token = (data['token'])     #iopnilguhgigbbht
-    note_name = (data['name'])  #english words
+    # data = request.get_json(force=True)
+    email = "mishka2017@gmail.com" #(data['email'])     #mishka2017@gmail.com
+    token = "iopnilguhgigbbht" #(data['token'])     #iopnilguhgigbbht
+    note_name = "English words" #(data['name'])  #english words
 
     noda = getFromKeep(email, token, note_name)
     return dict(value=noda)
