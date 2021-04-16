@@ -52,14 +52,15 @@ func run() error {
 	if err != nil {
 		return errors.Wrap(err, "failed init keep grpc client")
 	}
-	ext := external.NewExternalSource(client)
-	notes, err := ext.NoteGetter.GetAll()
-	if err != nil {
-		logrus.Fatal(err)
-	}
-	logrus.Println(notes)
 
-	return nil
+	go func() {
+		ext := external.NewExternalSource(client)
+		notes, err := ext.NoteGetter.GetAll()
+		if err != nil {
+			logrus.Error(err)
+		}
+		logrus.Println(notes)
+	}()
 
 	//Init PG
 	if false {
@@ -77,7 +78,7 @@ func run() error {
 		}
 	}
 	//Init MONGO
-	mc, err := mongo.NewMongoClient(*cfg) //TODO disconnect
+	mc, err := mongo.NewMongoClient(*cfg) //TODO return close function for graceful shutdown
 	if err != nil {
 		return errors.Wrap(err, "failed to initialize db")
 	}
