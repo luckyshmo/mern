@@ -3,21 +3,34 @@ from concurrent import futures
 import time
 import service_pb2_grpc as pb2_grpc
 import service_pb2 as pb2
+import gkeepapi
 
+def getFromKeep(email,token,name):
+        keep = gkeepapi.Keep()
+        success = keep.login(email, token)
+
+        gnotes = keep.find(query=name)
+        for note in gnotes:
+            gnote = note
+        # noda = nodes['177b5438cd8.82b17d320d61d816']
+
+        keep.sync()
+        return gnote.text.split('\n')
 
 class KeepService(pb2_grpc.KeepServicer):
 
     def __init__(self, *args, **kwargs):
         pass
 
-    def GetServerResponse(self, request, context):
-
+    def GetWords(self, request, context):
         # get the string from the incoming request
-        message = request.message
-        result = f'Hello I am up and running received "{message}" message from you'
-        result = {'message': result, 'received': True}
+        email = request.email
+        name = request.name
+        token = request.token
+        wordList = getFromKeep(email, token, name)
+        result = {'word': wordList}
 
-        return pb2.MessageResponse(**result)
+        return pb2.SearchResult(**result)
 
 
 def serve():
