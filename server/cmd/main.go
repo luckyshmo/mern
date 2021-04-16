@@ -8,6 +8,8 @@ import (
 	"time"
 
 	"github.com/luckyshmo/api-example/config"
+	"github.com/luckyshmo/api-example/pkg/external"
+	"github.com/luckyshmo/api-example/pkg/external/pythonNotes"
 	"github.com/luckyshmo/api-example/pkg/handler"
 	"github.com/luckyshmo/api-example/pkg/repository"
 	"github.com/luckyshmo/api-example/pkg/repository/mongo"
@@ -44,6 +46,20 @@ func run() error {
 		JSONF.TimestampFormat = time.RFC3339
 		logrus.SetFormatter(JSONF)
 	}
+
+	//Init GRPC Clinet
+	client, err := pythonNotes.NewKeepClient("localhost:50051")
+	if err != nil {
+		return errors.Wrap(err, "failed init keep grpc client")
+	}
+	ext := external.NewExternalSource(client)
+	notes, err := ext.NoteGetter.GetAll()
+	if err != nil {
+		logrus.Fatal(err)
+	}
+	logrus.Println(notes)
+
+	return nil
 
 	//Init PG
 	if false {
