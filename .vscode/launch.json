@@ -49,11 +49,11 @@
           "configurations": ["server", "client", "py"],
         },
         {
-            "name": "Server/Py",
+            "name": "Server/Py_http",
             "configurations": ["server", "py"],
         },
         {
-            "name": "Server/Py_grpc",
+            "name": "Server/py_grpc",
             "configurations": ["server", "py_grpc"],
         },
       ]
